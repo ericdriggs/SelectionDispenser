@@ -4,5 +4,4 @@ public enum TurnstileLane {
     ONE,
     TWO,
     THREE,//
-    ;
 }

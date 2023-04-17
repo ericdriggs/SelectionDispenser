@@ -5,8 +5,8 @@ package io.github.ericdriggs.selectiondispenser.dispenser.turnstyle;
  */
 public class FireTurnstyleEventRunnable implements Runnable{
     private boolean isSuccess = false;
-    private TurnstileLane turnstyleLane;
-    private TurnstileController turnstyleController;
+    private final TurnstileLane turnstyleLane;
+    private final TurnstileController turnstyleController;
 
     public FireTurnstyleEventRunnable(TurnstileLane turnstyleLane, TurnstileController turnstyleController) {
         this.turnstyleLane = turnstyleLane;

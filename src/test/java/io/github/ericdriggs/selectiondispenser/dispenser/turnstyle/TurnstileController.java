@@ -11,7 +11,7 @@ public class TurnstileController {
 
     private long pollWaitMillis = 10;
 
-    private ConcurrentHashMap<TurnstileLane, ConcurrentLinkedQueue<TurnstileEvent>> laneEvents;
+    private final ConcurrentHashMap<TurnstileLane, ConcurrentLinkedQueue<TurnstileEvent>> laneEvents;
 
     public TurnstileController() {
         laneEvents = new ConcurrentHashMap<TurnstileLane, ConcurrentLinkedQueue<TurnstileEvent>>();

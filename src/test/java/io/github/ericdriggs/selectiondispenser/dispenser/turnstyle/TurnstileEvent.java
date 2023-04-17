@@ -7,8 +7,8 @@ import java.util.Date;
  */
 public class TurnstileEvent {
 
-    private Date firedOn = new Date();
-    private TurnstileLane lane;
+    private final Date firedOn = new Date();
+    private final TurnstileLane lane;
 
     TurnstileEvent(TurnstileLane lane) {
         this.lane = lane;

@@ -21,10 +21,10 @@ public class TurnstileEventTest {
     }
 
     @Test
-    public void waitTimeouExceededTest() throws TimeoutException {
+    public void waitTimeouExceededTest() {
         TurnstileController turnstyleController = new TurnstileController();
         Assertions.assertThrows(TimeoutException.class, () -> {
-            turnstyleController.waitForEvent(TurnstileLane.ONE, 0l);
+            turnstyleController.waitForEvent(TurnstileLane.ONE, 0L);
         });
     }
 
@@ -33,13 +33,13 @@ public class TurnstileEventTest {
         TurnstileController turnstyleController = new TurnstileController();
         final TurnstileLane lane = TurnstileLane.ONE;
         turnstyleController.fireLaneEvent(lane);
-        TurnstileEvent event = turnstyleController.waitForEvent(lane, 0l);
+        TurnstileEvent event = turnstyleController.waitForEvent(lane, 0L);
         assertNotNull(event);
         assertEquals(event.getLane(), lane);
     }
 
     @Test
-    public void fireEventBeforeTimeoutTest() throws TimeoutException, InterruptedException {
+    public void fireEventBeforeTimeoutTest() throws InterruptedException {
         TurnstileController turnstyleController = new TurnstileController();
         final TurnstileLane lane = TurnstileLane.ONE;
 
@@ -60,7 +60,7 @@ public class TurnstileEventTest {
     }
 
     @Test
-    public void fireEventAfterTimeoutTest() throws TimeoutException, InterruptedException {
+    public void fireEventAfterTimeoutTest() throws InterruptedException {
         TurnstileController turnstyleController = new TurnstileController();
         final TurnstileLane lane = TurnstileLane.ONE;
 

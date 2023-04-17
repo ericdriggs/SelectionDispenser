@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 public class TurnstileEventFactory implements SelectionFactory<TurnstileEvent, TurnstileLane > {
 
     ExecutorService executorService = Executors.newCachedThreadPool();
-    private TurnstileController turnstileController = new TurnstileController();
-    private int timeout;
+    private final TurnstileController turnstileController = new TurnstileController();
+    private final int timeout;
 
     public TurnstileEventFactory(int timeout) {
         this.timeout = timeout;

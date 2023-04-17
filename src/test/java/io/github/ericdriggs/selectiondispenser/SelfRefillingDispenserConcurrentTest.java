@@ -1,14 +1,15 @@
 package io.github.ericdriggs.selectiondispenser;
 
 import io.github.ericdriggs.selectiondispenser.dispenser.turnstyle.*;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.*;
 
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by edriggs on 10/18/15.
@@ -17,10 +18,10 @@ public class SelfRefillingDispenserConcurrentTest {
 
     ExecutorService executorService = Executors.newCachedThreadPool();
 
-    @BeforeMethod
-    public void nameBefore(Method method)
-    {
-        System.out.println("==== " +  getClass().getSimpleName() + "::" + method.getName() + " ====");
+    @BeforeEach
+    void logTestName(TestInfo testInfo) {
+        String methodName = testInfo.getTestMethod().orElseThrow().getName();
+        System.out.println("Test " + getClass().getSimpleName() + "::" + methodName);
     }
 
     @Test

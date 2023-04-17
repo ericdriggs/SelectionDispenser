@@ -1,24 +1,26 @@
 package io.github.ericdriggs.selectiondispenser.dispenser;
 
 import io.github.ericdriggs.selectiondispenser.SimpleSelectionDispenser;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import io.github.ericdriggs.selectiondispenser.dispenser.crayon.Crayon;
 import io.github.ericdriggs.selectiondispenser.dispenser.crayon.CrayonColor;
-import org.testng.Assert;
+import org.junit.jupiter.api.TestInfo;
 
-import java.lang.reflect.Method;
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Created by edriggs on 10/11/15.
  */
 public class SimpleSelectionDispenserTest {
 
-    @BeforeMethod
-    public void nameBefore(Method method)
-    {
-        System.out.println("==== " +  getClass().getSimpleName() + "::" + method.getName() + " ====");
+    @BeforeEach
+    void logTestName(TestInfo testInfo) {
+        String methodName = testInfo.getTestMethod().orElseThrow().getName();
+        System.out.println("Test " + getClass().getSimpleName() + "::" + methodName);
     }
 
     public SimpleSelectionDispenser<Crayon, CrayonColor> getCrayonDispenser() {
@@ -29,7 +31,7 @@ public class SimpleSelectionDispenserTest {
     public void selectionInventoryCountZeroAfterCreateTest() {
         SimpleSelectionDispenser<Crayon, CrayonColor> dispenser = getCrayonDispenser();
         for ( CrayonColor crayonColor : EnumSet.allOf(CrayonColor.class)) {
-            Assert.assertEquals(dispenser.getSelectionInventoryCount(crayonColor), 0);
+            assertEquals(dispenser.getSelectionInventoryCount(crayonColor), 0);
         }
     }
 
@@ -37,7 +39,7 @@ public class SimpleSelectionDispenserTest {
     public void hasItemsAfterRefillTest() {
         SimpleSelectionDispenser<Crayon, CrayonColor> dispenser = getCrayonDispenser();
         dispenser.addInventory(CrayonColor.BLUE, new Crayon(CrayonColor.BLUE));
-        Assert.assertEquals(dispenser.getSelectionInventoryCount(CrayonColor.BLUE), 1);
+        assertEquals(dispenser.getSelectionInventoryCount(CrayonColor.BLUE), 1);
     }
 
     @Test
@@ -45,8 +47,8 @@ public class SimpleSelectionDispenserTest {
         SimpleSelectionDispenser<Crayon, CrayonColor> dispenser = getCrayonDispenser();
         dispenser.addInventory(CrayonColor.BLUE, new Crayon(CrayonColor.BLUE));
         Crayon crayon = dispenser.dispense(CrayonColor.BLUE);
-        Assert.assertNotNull(crayon);
-        Assert.assertEquals(crayon.getCrayonColor(), CrayonColor.BLUE);
-        Assert.assertEquals(dispenser.getSelectionInventoryCount(CrayonColor.BLUE), 0);
+        assertNotNull(crayon);
+        assertEquals(crayon.getCrayonColor(), CrayonColor.BLUE);
+        assertEquals(dispenser.getSelectionInventoryCount(CrayonColor.BLUE), 0);
     }
 }

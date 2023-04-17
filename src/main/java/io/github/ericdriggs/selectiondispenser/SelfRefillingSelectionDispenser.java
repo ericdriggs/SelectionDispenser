@@ -6,7 +6,7 @@ import java.util.concurrent.*;
 public class SelfRefillingSelectionDispenser<T, E> extends AbstractSelectionDispenser<T, E> {
     protected final SelectionFactory<T, E> selectionFactory;
     protected volatile Map<E, Integer> desiredInventory = new ConcurrentHashMap<E, Integer>();
-    protected ExecutorService executorService = Executors.newCachedThreadPool();
+    protected final ExecutorService executorService = Executors.newCachedThreadPool();
     protected TimeUnit refillWaitTimeUnit;
     protected long refillWaitCount;
 
@@ -25,11 +25,11 @@ public class SelfRefillingSelectionDispenser<T, E> extends AbstractSelectionDisp
     /**
      * Sets desired inventory and attempts to fill inventory to desired inventory.
      *
-     * @param desiredInventory
+     * @param desiredInventory desired inventory
      */
     public SelfRefillingSelectionDispenser setDesiredInventory(Map<E, Integer> desiredInventory) {
         if (desiredInventory == null) {
-            desiredInventory = new ConcurrentHashMap<E, Integer>();
+            desiredInventory = new ConcurrentHashMap<>();
         }
         this.desiredInventory = desiredInventory;
         refillInventory();
@@ -52,9 +52,7 @@ public class SelfRefillingSelectionDispenser<T, E> extends AbstractSelectionDisp
     @Override
     public Set<E> getSelections() {
         Set<E> selections = super.getSelections();
-        for (E selection : desiredInventory.keySet()) {
-            selections.add(selection);
-        }
+        selections.addAll(desiredInventory.keySet());
         return selections;
     }
 
@@ -86,8 +84,8 @@ public class SelfRefillingSelectionDispenser<T, E> extends AbstractSelectionDisp
     }
 
 
-    protected class RefillSelectionCallable implements Callable {
-        E selection;
+    protected class RefillSelectionCallable implements Callable<Object> {
+        final E selection;
 
         RefillSelectionCallable(E selection) {
             this.selection = selection;
@@ -118,7 +116,7 @@ public class SelfRefillingSelectionDispenser<T, E> extends AbstractSelectionDisp
     }
 
     protected class RefillSelectionItemRunnable implements Runnable {
-        E selection;
+        final E selection;
 
         RefillSelectionItemRunnable(E selection) {
             this.selection = selection;
@@ -141,8 +139,8 @@ public class SelfRefillingSelectionDispenser<T, E> extends AbstractSelectionDisp
     }
 
     protected class AddItemsRunnable implements Runnable {
-        E selection;
-        int count;
+        final E selection;
+        final int count;
 
         AddItemsRunnable(E selection, int count) {
             this.selection = selection;
@@ -157,7 +155,7 @@ public class SelfRefillingSelectionDispenser<T, E> extends AbstractSelectionDisp
     }
 
     protected class AddItemRunnable implements Runnable {
-        E selection;
+        final E selection;
 
         AddItemRunnable(E selection) {
             this.selection = selection;

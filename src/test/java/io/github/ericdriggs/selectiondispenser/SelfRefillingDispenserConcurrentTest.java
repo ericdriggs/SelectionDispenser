@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-import java.lang.reflect.Method;
 import java.util.concurrent.*;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class SelfRefillingDispenserConcurrentTest {
 
-    ExecutorService executorService = Executors.newCachedThreadPool();
+    final ExecutorService executorService = Executors.newCachedThreadPool();
 
     @BeforeEach
     void logTestName(TestInfo testInfo) {
@@ -30,7 +29,7 @@ public class SelfRefillingDispenserConcurrentTest {
         TurnstileEventFactory turnstileEventFactory = new TurnstileEventFactory(100);
 
         SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane> dispenser =
-                new SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane>(turnstileEventFactory);
+                new SelfRefillingSelectionDispenser<>(turnstileEventFactory);
 
         DispenseCallable callable1 = new DispenseCallable(TurnstileLane.ONE, dispenser);
         DispenseCallable callable2 = new DispenseCallable(TurnstileLane.TWO, dispenser);
@@ -62,7 +61,7 @@ public class SelfRefillingDispenserConcurrentTest {
         TurnstileEventFactory turnstileEventFactory = new TurnstileEventFactory(100);
 
         SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane> dispenser =
-                new SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane>(turnstileEventFactory);
+                new SelfRefillingSelectionDispenser<>(turnstileEventFactory);
 
         DispenseCallable callable1 = new DispenseCallable(TurnstileLane.ONE, dispenser);
         DispenseCallable callable2 = new DispenseCallable(TurnstileLane.TWO, dispenser);
@@ -94,7 +93,7 @@ public class SelfRefillingDispenserConcurrentTest {
         TurnstileEventFactory turnstileEventFactory = new TurnstileEventFactory(100);
 
         SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane> dispenser =
-                new SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane>(turnstileEventFactory);
+                new SelfRefillingSelectionDispenser<>(turnstileEventFactory);
 
         DispenseCallable callable1 = new DispenseCallable(TurnstileLane.ONE, dispenser);
         DispenseCallable callable2 = new DispenseCallable(TurnstileLane.TWO, dispenser);
@@ -128,7 +127,7 @@ public class SelfRefillingDispenserConcurrentTest {
         TurnstileEventFactory turnstileEventFactory = new TurnstileEventFactory(100);
 
         SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane> dispenser =
-                new SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane>(turnstileEventFactory);
+                new SelfRefillingSelectionDispenser<>(turnstileEventFactory);
 
         DispenseCallable callable1 = new DispenseCallable(TurnstileLane.ONE, dispenser);
         DispenseCallable callable2 = new DispenseCallable(TurnstileLane.TWO, dispenser);
@@ -154,11 +153,11 @@ public class SelfRefillingDispenserConcurrentTest {
     }
 
 
-    private class DispenseCallable implements Callable<TurnstileEvent> {
+    private static class DispenseCallable implements Callable<TurnstileEvent> {
 
         private boolean isComplete = false;
-        private TurnstileLane turnstileLane;
-        private SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane> dispenser;
+        private final TurnstileLane turnstileLane;
+        private final SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane> dispenser;
 
         DispenseCallable(TurnstileLane turnstilLane, SelfRefillingSelectionDispenser<TurnstileEvent, TurnstileLane> dispenser) {
             this.turnstileLane = turnstilLane;

@@ -13,5 +13,5 @@ public interface SelectionFactory<T, E> {
      * @param selection the selection to create the item for
      * @return an instance of T for use in selection E
      */
-    public T createItem(E selection);
+    T createItem(E selection);
 }

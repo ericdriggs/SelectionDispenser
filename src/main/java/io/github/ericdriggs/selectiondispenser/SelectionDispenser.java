@@ -15,24 +15,24 @@ public interface SelectionDispenser<T, E> {
     /**
      * @return the set of selections the dispenser offers
      */
-    public Set<E> getSelections();
+    Set<E> getSelections();
 
     /**
      * @return the current inventory count for each selection
      */
-    public int getSelectionInventoryCount(E selection);
+    int getSelectionInventoryCount(E selection);
 
 
     /**
      * @param selection Determines which inventory to dispense from. Similar to a product button on a vending machine.
      * @return an instance of T, or null if unable to dispense.
      */
-    public T dispense(E selection);
+    T dispense(E selection);
 
 
     /**
      * @param newItem adds the new item to the existing inventory.
      *
      */
-    public void addInventory(E selection, T newItem);
+    void addInventory(E selection, T newItem);
 }

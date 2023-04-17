@@ -23,7 +23,7 @@ public class SelfRefillingSelectionDispenserFunctionalTest {
 
 
     public SelfRefillingSelectionDispenser<Crayon, CrayonColor> getCrayonDispenser() {
-        return new SelfRefillingSelectionDispenser<Crayon, CrayonColor>(new CrayonFactory());
+        return new SelfRefillingSelectionDispenser<>(new CrayonFactory());
     }
 
     @Test
@@ -40,11 +40,11 @@ public class SelfRefillingSelectionDispenserFunctionalTest {
         final int expectedGreenCount = 2;
         final int expectedRedCount = 0;
 
-        Map<CrayonColor, Integer> desiredInventory = new HashMap<CrayonColor, Integer>();
+        Map<CrayonColor, Integer> desiredInventory = new HashMap<>();
         desiredInventory.put(CrayonColor.BLUE, expectedBlueCount);
         desiredInventory.put(CrayonColor.GREEN, expectedGreenCount);
         SelfRefillingSelectionDispenser<Crayon, CrayonColor> dispenser =
-                new SelfRefillingSelectionDispenser<Crayon, CrayonColor>(new CrayonFactory());
+                new SelfRefillingSelectionDispenser<>(new CrayonFactory());
         dispenser.setDesiredInventory(desiredInventory);
         Thread.sleep(100);
 

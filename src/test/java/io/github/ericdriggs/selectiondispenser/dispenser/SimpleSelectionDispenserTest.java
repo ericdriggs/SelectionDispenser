@@ -24,7 +24,7 @@ public class SimpleSelectionDispenserTest {
     }
 
     public SimpleSelectionDispenser<Crayon, CrayonColor> getCrayonDispenser() {
-        return new SimpleSelectionDispenser<Crayon, CrayonColor>();
+        return new SimpleSelectionDispenser<>();
     }
 
     @Test
